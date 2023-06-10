@@ -1,0 +1,39 @@
+[01;32mOChicken@ThinkPad[00m:[01;34mlibpmu[00m $ ./demo
+[32m[===============][0m
+[32m[02:08:24 BEGIN ][0m [1mtest_foo[0m
+[---------------]
+[32m[02:08:24 CASE  ][0m foo 1
+[32m[02:08:25     OK][0m 775ms 791us 461ns 1.250Mb used.
+[---------------]
+[32m[02:08:25 CASE  ][0m foo 2
+[32m[02:08:25     OK][0m 475ms 642us 410ns 1280Kb used.
+[---------------]
+[32m[02:08:25 PASSED][0m [1mtest_foo[0m: 2/2 subtask(s) passed (1s 259ms 236us 718ns 1.839Mb used).
+[32m[===============][0m
+
+[32m[===============][0m
+[32m[02:08:25 BEGIN ][0m [1mtest_bar[0m
+[---------------]
+[32m[02:08:27 CASE  ][0m bar 1
+[32m[               ][0m diff = 4.22733e-14
+[32m[02:08:29     OK][0m 2s 340ms 499us 311ns 2.319Mb used.
+[---------------]
+[32m[02:08:29 CASE  ][0m bar 2
+[32m[               ][0m diff = 2.90912e-14
+[32m[02:08:32     OK][0m 2s 242ms 189us 554ns 1304Kb used.
+[---------------]
+[32m[02:08:32 CASE  ][0m bar 3
+[32m[               ][0m diff = 1.9481e-5
+[31mFail[0m in gpqhe.c:[1mtest_bar:1442[0m: Assertion `diff<1e-5`.
+[31m[02:08:34 FAILED][0m 2s 388ms 197us 640ns 12Kb used.
+[---------------]
+[32m[02:08:34 CASE  ][0m bar 4
+[32m[               ][0m diff = 4.2492e-14
+[32m[02:08:36     OK][0m 2s 348ms 501us 305ns 2.581Mb used.
+[---------------]
+[31m[02:08:36 FAILED][0m [1mtest_bar[0m: 1/4 subtask(s) failed (11s 352ms 438us 489ns 5.374Mb used).
+[31m[===============][0m
+
+[01;32mOChicken@ThinkPad[00m:[01;34mlibpmu[00m $ echo $?
+1
+[01;32mOChicken@ThinkPad[00m:[01;34mlibpmu[00m $
