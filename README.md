@@ -68,4 +68,4 @@ int main(int argc, char *argv[])
 
 The output looks like:
 
-![demo output](demo.png)
+![demo output](demo.png)  
