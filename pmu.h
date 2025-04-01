@@ -19,12 +19,14 @@
 #ifndef PMU_H
 #define PMU_H
 
+#define _GNU_SOURCE
 #include <stdbool.h>      /* bool   */
 #include <stddef.h>       /* size_t */
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>       /* malloc, abort, rand */
 #include <string.h>       /* memset, memcpy, strcpy, strerror */
+#include <sched.h>	  /* sched_getcpu */
 
 /* resource */
 #include <time.h>         /* clock  */
@@ -53,19 +55,6 @@ static inline uint64_t rdtsc()
   __asm__ volatile ("rdtsc; shlq $32,%%rdx; orq %%rdx,%%rax"
     : "=a" (result) : : "%rdx");
   return result;
-}
-
-/**
- * rdcpufreq - read CPU frequency (in GHz).
- */
-static inline double rdcpufreq()
-{
-  char buf[80];
-  FILE *fp=fopen("lscpu | grep 'CPU MHz' | sed -e 's/.*:[^0-9]//'", "r");
-  if (fgets(buf, sizeof(buf), fp)==NULL)
-    fprintf(stderr, "Error in lscpu: %s\n", strerror(errno));
-  fclose(fp);
-  return atof(buf)/1000;
 }
 
 
