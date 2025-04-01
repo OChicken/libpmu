@@ -94,7 +94,7 @@ nonzerosec:
 /**
  * rdcpufreq - read CPU frequency (in GHz).
  */
-static inline double rdcpufreq()
+static inline int rdcpufreq()
 {
   char buf[80];
   snprintf(buf, sizeof(buf),
@@ -104,7 +104,7 @@ static inline double rdcpufreq()
   if (fgets(buf, sizeof(buf), fp)==NULL)
     fprintf(stderr, "Error in lscpu: %s\n", strerror(errno));
   fclose(fp);
-  return atof(buf)/1000;
+  return atof(buf);
 }
 
 /**
@@ -132,7 +132,7 @@ void print_cpuinfo(const char *__restrict s, uint64_t *cpu, size_t ntests)
     cpu[i] = cpu[i+1] - cpu[i] - overhead;
 
   printf("\033[4mcpu info\033[0m %s:\n", s);
-  printf("\\_ freq:    %f GHz\n",rdcpufreq());
+  printf("\\_ freq:    %d kHz\n", rdcpufreq());
   printf("\\_ median:  %lu cycles/ticks\n", median(cpu, ntests));
   printf("\\_ average: %lu cycles/ticks\n", average(cpu, ntests));
 }
