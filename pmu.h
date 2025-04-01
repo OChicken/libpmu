@@ -61,10 +61,10 @@ static inline uint64_t rdtsc()
 static inline double rdcpufreq()
 {
   char buf[80];
-  FILE *fp=popen("lscpu | grep 'CPU MHz' | sed -e 's/.*:[^0-9]//'", "r");
+  FILE *fp=fopen("lscpu | grep 'CPU MHz' | sed -e 's/.*:[^0-9]//'", "r");
   if (fgets(buf, sizeof(buf), fp)==NULL)
     fprintf(stderr, "Error in lscpu: %s\n", strerror(errno));
-  pclose(fp);
+  fclose(fp);
   return atof(buf)/1000;
 }
 
@@ -121,6 +121,8 @@ void pmu_assert_fail(const char *__restrict expr,
 /**************
  *    Time    *
  **************/
+
+#include <time.h>
 
 static inline void pmu_timeit(void (*f)())
 {
