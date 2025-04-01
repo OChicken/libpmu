@@ -131,10 +131,11 @@ void print_cpuinfo(const char *__restrict s, uint64_t *cpu, size_t ntests)
   for(size_t i=0; i<ntests; ++i)
     cpu[i] = cpu[i+1] - cpu[i] - overhead;
 
-  printf("\033[4mcpu info\033[0m %s:\n", s);
+  printf("\033[1mcpu info\033[0m %s:\n", s);
   printf("\\_ freq:    %d kHz\n", rdcpufreq());
   printf("\\_ median:  %lu cycles/ticks\n", median(cpu, ntests));
   printf("\\_ average: %lu cycles/ticks\n", average(cpu, ntests));
+  printf("\n");
 }
 
 /**
