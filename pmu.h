@@ -113,9 +113,28 @@ void pmu_assert_fail(const char *__restrict expr,
  *********************/
 
 void print_ind(const char name[], const int *v, const int n);
+
 void print_vec_u8(const char name[], const uint8_t *v, const int n);
 void print_vec_u32(const char name[], const uint32_t *v, const int n);
 void print_vec_u64(const char name[], const uint64_t *v, const int n);
+
+#define print_vec(name, array, len)  \
+_Generic((array),                    \
+         uint8_t*:  print_vec_u8,    \
+         uint32_t*: print_vec_u32,   \
+         uint64_t*: print_vec_u64    \
+)(name, array, len)
+
+void print_mat_u8(const char name[], const uint8_t *v, const int m, const int n);
+void print_mat_u32(const char name[], const uint32_t *v, const int m, const int n);
+void print_mat_u64(const char name[], const uint64_t *v, const int m, const int n);
+
+#define print_mat(name, array, row, col) \
+_Generic((array),                        \
+         uint8_t*:  print_mat_u8,        \
+         uint32_t*: print_mat_u32,       \
+         uint64_t*: print_mat_u64        \
+)(name, array, row, col)
 
 #ifdef __cplusplus
 }

@@ -431,6 +431,51 @@ void pmu_assert_fail(const char *__restrict expr,
     file, func, line, expr);
 }
 
+
+
+/*********************
+ *    Debugging      *
+ *********************/
+
+void print_ind(const char name[], const int *v, const int n)
+{
+  printf("%s = [ ", name);
+  for (int i = 0; i < n; i++)
+    printf("%2d ", v[i]);
+  printf("]\n");
+}
+
+#define DEFINE_PRINT_VEC(SUFFIX, TYPE, FMT)               \
+void print_vec_##SUFFIX(const char name[], const TYPE *v, \
+                        const int n)                      \
+{                                                         \
+  printf("%s = [ ", name);                                \
+  for (int i = 0; i < n; i++)                             \
+    printf(FMT " ", v[i]);                                \
+  printf("]\n");                                          \
+}
+
+DEFINE_PRINT_VEC(u8,  uint8_t,  "%hhu")
+DEFINE_PRINT_VEC(u32, uint32_t, "%2u")
+DEFINE_PRINT_VEC(u64, uint64_t, "%2lu")
+
+#define DEFINE_PRINT_MAT(SUFFIX, TYPE, FMT)               \
+void print_mat_##SUFFIX(const char name[], const TYPE *A, \
+                        const int m, const int n)         \
+{                                                         \
+  printf("%s =\n", name);                                 \
+  for (int i = 0; i < m; i++) {                           \
+    for (int j = 0; j < n; j++)                           \
+      printf(FMT " ", A[i*n+j]);                          \
+    printf("\n");                                         \
+  }                                                       \
+}
+
+DEFINE_PRINT_MAT(u8,  uint8_t,  "%hhu")
+DEFINE_PRINT_MAT(u32, uint32_t, "%2u")
+DEFINE_PRINT_MAT(u64, uint64_t, "%2lu")
+
+
 #ifdef __cplusplus
 }
 #endif
