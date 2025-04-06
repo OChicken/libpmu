@@ -8,6 +8,7 @@ A sample test file looks like:
 
 ```c
 #include "path/to/pmu.h"
+#define NTESTS 1000000
 
 #define CHECK_DIFF(m,m0)                       \
   TEST_PLACEHOLDER();                          \
@@ -59,6 +60,12 @@ TEST_END();
 
 int main(int argc, char *argv[])
 {
+	uint64_t t[NTESTS];
+	for (int i = 0; i < NTESTS; i++) {
+		t[i] = rdtsc();
+		foo(1);
+	}
+	print_cpuinfo("foo", t, NTESTS);
 	int err = 0;
 	err |= test_foo();
 	err |= test_bar();
@@ -68,4 +75,4 @@ int main(int argc, char *argv[])
 
 The output looks like:
 
-![demo output](demo.png)  
+![demo output](demo.png)
