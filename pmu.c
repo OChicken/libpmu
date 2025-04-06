@@ -383,6 +383,41 @@ void pmu_test_pile(const char *__restrict file,
   printf("\033[33mPile\033[0m in %s:\033[1m%s:%i\033[0m.\n", file, func, line);
 }
 
+void pmu_timeit(void (*f)())
+{
+  struct timespec start_real, end_real;
+  clock_t start_cpu, end_cpu;
+  uint64_t start_cycles, end_cycles;
+
+  /* get start status */
+  clock_gettime(CLOCK_REALTIME, &start_real);
+  start_cpu = clock();
+  start_cycles = rdtsc(); /* get current time stamp (CPU cycles) */
+
+  f();
+
+  /* get end status */
+  clock_gettime(CLOCK_REALTIME, &end_real);
+  end_cpu = clock();
+  end_cycles = rdtsc(); /* get current time stamp (CPU cycles) */
+
+  /* calc real time */
+  double real_time = (end_real.tv_sec - start_real.tv_sec) +
+                     (end_real.tv_nsec - start_real.tv_nsec) / 1e9;
+
+  double cpu_time = (double)(end_cpu - start_cpu) / CLOCKS_PER_SEC;
+  uint64_t cycles = end_cycles - start_cycles;
+
+  /* Output */
+  printf("Evaluation took:\n");
+  printf("  %.6f seconds of real time\n", real_time);
+  printf("  %.6f seconds of total run time (%.6f user, 0.000000 system)\n",
+         cpu_time, cpu_time);
+  printf("  %.2f%% CPU\n", (cpu_time / real_time) * 100);
+  printf("  %lu processor cycles\n", cycles);
+}
+
+
 
 /*********************
  *    Assertation    *
